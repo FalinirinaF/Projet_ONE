@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+<style>
+  .container {
+    text-align: center; /* Centre le contenu à l'intérieur du conteneur */
+  }
+
+  .app-table {
+    margin: 0 auto; /* Centre la table */
+    width: 100%; /* Ajustez la largeur selon vos besoins */
+    border: 1px solid blue; /* Bordure bleue autour de la table */
+   
+  }
+
+
+  .form-group {
+    display: inline-block; /* Aligne le champ de recherche à côté de la table */
+    margin-top: 40px; /* Espacement entre la table et le champ de recherche */
+  }
+
+  .no-results {
+    text-align: center; /* Centre le message "No results" */
+  }
+
+  .table-output {
+    text-align: center; /* Centre la deuxième table */
+  }
+
+  .pagination-container {
+    text-align: center; /* Centre la pagination */
+  }
+</style>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="">EMPLOYES</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Liste
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="col-md-2">
+      <a href="{% url 'add-income'%}" class="btn btn-primary">Ajout employés</a>
+    </div>
+  </div>
+
+   <div class="container">
+    {% include 'partials/_messages.html' %}
+
+    {% if income.count %}
+
+    <div class="row">
+      <div class="col-md-8"></div>
+      <div class="col-md-4">
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="searchField" placeholder="Search">
+        </div>
+      </div>
+     </div>
+<div class="app-table">
+
+  <table class="table table-stripped table-hover">
+    <thead>
+      <tr>
+        <th>IM ({{currency}})</th>
+        <th>POST</th>
+        <th>NOM</th>
+        <th>PRENOM(s)</th>
+        <th>AGE</th>
+        <th>Date d'embauche</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for income in page_obj%}
+      <tr>
+        <td>{{income.im}}</td>
+        <td>{{income.source}}</td>
+        <td>{{income.nom}}</td>
+        <td>{{income.description}}</td>
+        <td>{{income.age}} ans</td>
+        <td>{{income.date}}</td>
+
+        <td>
+          <a
+            href="{% url 'income-edit' income.id  %}"
+            class="btn btn-secondary btn-sm"
+            >Edit</a
+          >
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p class="no-results" style="display: none;">No results </p>
+    <div class="table-output">
+
+
+      <table class="table table-stripped table-hover">
+        <thead>
+          <tr>
+            <th>Amount ({{currency}})</th>
+            <th>Source</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody  class="table-body">
+
+
+        </tbody>
+      </table>
+    </div>
+
+
+
+
+    <div class="pagination-container">
+    <div class="">
+      Showing page {{page_obj.number}} of {{ page_obj.paginator.num_pages }}
+    </div>
+    <ul class="pagination align-right float-right mr-auto">
+      {% if page_obj.has_previous %}
+      <li {% if page_obj.number == 1 %} class="page-item active" {% endif %}><a class="page-link" href="?page=1">&laquo; 1</a></li>
+      <li class="page-item"> <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+      {% endif %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+      <li class="page-item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages}} &raquo;</a></li>
+      {% endif %}
+
+
+      </ul>
+    {% endif %}
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+<script src="{% static 'js/searchIncome.js' %}"></script>
+
+
+
+
+</script>
+
+
+
+{% endblock content %}

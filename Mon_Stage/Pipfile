@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+validate-email = "*"
+six = "*"
+django = "*"
+mysqlclient = "*"
+python-dotenv = "*"
+xlwt = "*"
+django-weasyprint = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

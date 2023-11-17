@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF</title>
+    <style>
+
+        @page{
+            size: "A4";
+            margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+
+            @top-center{
+                content: "RAPPORT DES PRODUITS";
+                background-image: url('Mon_stage/static/img/logos.jpg'); /* Ajoutez le chemin de votre image ici */
+                background-repeat: no-repeat;
+                background-size: contain;
+                padding-top: 10px;
+            }
+            @bottom-right{
+                content: "page" counter(page) " par " counter(page);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <img src="" alt="">
+    <li>LISTE DES PRODUITS</li><br>
+    <table class="table table-success table-striped">
+        <thead class="thead">
+        <tr>
+            <td>NO</td>
+            <td>PRIX</td>
+            <td>CATECORIES</td>
+            <td>DESCRIPTION</td>
+            <td>VENDU</td>
+            <td>DATE</td>
+        </tr>
+<tbody>
+    {% for expense in expenses %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ expense.amount }}</td>
+            <td>{{ expense.category }}</td>
+            <td>{{ expense.description }}</td>
+            <td>{{ expense.vendu }}</td>
+            <td>{{ expense.date }}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="1">PRIX TOTAL:</td>
+        <td>{{ total }}</td>
+    </tr>
+</tbody>
+    </table>
+</body>
+</html>
